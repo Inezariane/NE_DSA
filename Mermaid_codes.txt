@@ -1,0 +1,75 @@
+graph TD
+    A[Start] --> B[Initialize cities, roadList, roads, budgets]
+    B --> C[Display Menu]
+    C --> D{User Choice}
+
+    %% Choice 1: Add Cities
+    D -->|1| E[Input numCities]
+    E --> F[Loop numCities]
+    F --> G[Input cityName]
+    G --> H{City Exists?}
+    H -->|Yes| I[Print 'City exists']
+    H -->|No| J[Add city to cities]
+    J --> K[Save cities to cities.txt]
+    K --> L[Resize roads and budgets]
+    I --> F
+    L --> C
+
+    %% Choice 2: Add Road
+    D -->|2| M[Input city1, city2]
+    M --> N{Valid Cities?}
+    N -->|No| O[Print 'Cities not found'] --> C
+    N -->|Yes| P{Same City?}
+    P -->|Yes| Q[Print 'Cannot create road'] --> C
+    P -->|No| R[Add road to roads matrix]
+    R --> S[Save roads to roads.txt]
+    S --> C
+
+    %% Choice 3: Add Budget
+    D -->|3| T[Input city1, city2]
+    T --> U{Valid Cities?}
+    U -->|No| V[Print 'Cities not found'] --> C
+    U -->|Yes| W{Road Exists?}
+    W -->|No| X[Print 'No road exists'] --> C
+    W -->|Yes| Y[Input budget]
+    Y --> Z[Update budgets matrix]
+    Z --> AA[Update/Create road in roadList]
+    AA --> BB[Save roads to roads.txt]
+    BB --> C
+
+    %% Choice 4: Edit City
+    D -->|4| CC[Input city index]
+    CC --> DD{Valid Index?}
+    DD -->|No| EE[Print 'Invalid index'] --> C
+    DD -->|Yes| FF[Input newName]
+    FF --> GG{City Exists?}
+    GG -->|Yes| HH[Print 'City exists'] --> C
+    GG -->|No| II[Update city name]
+    II --> JJ[Save cities to cities.txt]
+    JJ --> C
+
+    %% Choice 5: View City
+    D -->|5| KK[Input city index]
+    KK --> LL{Valid Index?}
+    LL -->|No| MM[Print 'Invalid index'] --> C
+    LL -->|Yes| NN[Print city details]
+    NN --> C
+
+    %% Choice 6: Display all cities
+    D -->|6| OO[Display all cities]
+    OO --> C
+
+    %% Choice 7: Display roads matrix
+    D -->|7| PP[Display roads matrix]
+    PP --> C
+
+    %% Choice 8: Display all data
+    D -->|8| QQ[Display all data: cities, roads, budgets]
+    QQ --> C
+
+    %% Choice 9: Exit
+    D -->|9| RR[Print 'Exiting' and Exit]
+
+    %% Invalid Choice
+    D -->|Invalid| SS[Print 'Invalid choice']
+    SS --> C
