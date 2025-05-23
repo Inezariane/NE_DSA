@@ -169,33 +169,35 @@ void displayCities(const vector<string>& cities) {
 }
 
 void displayMatrix(const vector<vector<int>>& matrix, const vector<string>& cities, const string& title) {
-    cout << "\n" << title << "\n";
-    for (const auto& city : cities) {
-        cout << setw(10) << city;
+    cout << "Cities :\n";
+    for (size_t i = 0; i < cities.size(); ++i) {
+        cout << i + 1 << "  " << cities[i] << endl;
     }
+    cout << "\n" << title << "\n";
+
     cout << endl;
     for (size_t i = 0; i < cities.size(); ++i) {
-        cout << cities[i] << "       ";
         for (size_t j = 0; j < matrix[i].size(); ++j) {
-            cout << setw(10) << matrix[i][j];
+            cout << setw(5) << matrix[i][j];
         }
         cout << endl;
     }
 }
 
 void displayBudgetMatrix(const vector<vector<double>>& matrix, const vector<string>& cities) {
-    cout << "\nRoad Budget Matrix:\n ";
-    for (const auto& city : cities) {
-        cout << setw(10) << city;
+    cout << "Cities :\n";
+    for (size_t i = 0; i < cities.size(); ++i) {
+        cout << i + 1 << "  " << cities[i] << endl;
     }
+    cout << "\nRoad Budget Matrix:\n ";
+
     cout << endl;
     for (size_t i = 0; i < matrix.size(); ++i) {
-        cout << cities[i] << " ";
         for (size_t j = 0; j < matrix[i].size(); ++j) {
             if (matrix[i][j] == 0.0) {
-                cout << setw(10) << "-";
+                cout << setw(5) << "-";
             } else {
-                cout << setw(10) << matrix[i][j];
+                cout << setw(5) << matrix[i][j];
             }
         }
         cout << endl;
