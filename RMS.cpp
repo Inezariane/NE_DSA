@@ -11,8 +11,20 @@ struct Road {
     double budget;
 };
 
+string toLowerCase(const string& str) {
+    string lowerStr = str;
+    transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(), ::tolower);
+    return lowerStr;
+}
+// Check if the city exists(in lowercase as Kigali and kigali are the same.)
 bool cityExists(const vector<string>& cities, const string& city) {
-    return find(cities.begin(), cities.end(), city) != cities.end();
+    string target = toLowerCase(city);
+    for (const auto& city : cities) {
+        if (toLowerCase(city) == target) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void saveCities(const vector<string>& cities) {
@@ -35,7 +47,7 @@ void saveRoads(const vector<Road>& roads, const vector<string>& cities) {
 void addCities(vector<string>& cities, int numCities) {
     string cityName;
     for (int i = 0; i < numCities; ++i) {
-        cout << "Enter city name: ";
+        cout << "Enter name for city " << i + 1 << ": ";
         cin >> cityName;
         if (cityExists(cities, cityName)) {
             cout << "City " << cityName << " already exists." << endl;
@@ -57,9 +69,9 @@ int findCityIndex(const vector<string>& cities, const string& city) {
 
 void addRoad(vector<vector<int>>& roads, vector<Road>& roadList, const vector<string>& cities) {
     string city1, city2;
-    cout << "Enter first city name: ";
+    cout << "Enter the name of the first city : ";
     cin >> city1;
-    cout << "Enter second city name: ";
+    cout << "Enter the name of the second city : ";
     cin >> city2;
 
     int idx1 = findCityIndex(cities, city1);
@@ -82,9 +94,9 @@ void addRoad(vector<vector<int>>& roads, vector<Road>& roadList, const vector<st
 void addRoadBudget(vector<vector<int>>& roads, vector<vector<double>>& budgets,
                    vector<Road>& roadList, const vector<string>& cities) {
     string city1, city2;
-    cout << "Enter first city name: ";
+    cout << "Enter the name of the first city: ";
     cin >> city1;
-    cout << "Enter second city name: ";
+    cout << "Enter the name of the second city: ";
     cin >> city2;
 
     int idx1 = findCityIndex(cities, city1);
@@ -118,7 +130,7 @@ void addRoadBudget(vector<vector<int>>& roads, vector<vector<double>>& budgets,
     }
 
     saveRoads(roadList, cities);
-    cout << "Budget added for road between " << city1 << " and " << city2 << endl;
+    cout << "Budget added for the road between " << city1 << " and " << city2 << endl;
 }
 
 void editCity(vector<string>& cities, int index) {
@@ -128,7 +140,7 @@ void editCity(vector<string>& cities, int index) {
     }
 
     string newName;
-    cout << "Enter new city name: ";
+    cout << "Enter new name for city: ";
     cin >> newName;
 
     if (cityExists(cities, newName)) {
@@ -138,7 +150,7 @@ void editCity(vector<string>& cities, int index) {
 
     cities[index - 1] = newName;
     saveCities(cities);
-    cout << "City name updated successfully\n";
+    cout << "City updated successfully\n";
 }
 
 void searchCity(const vector<string>& cities, int index) {
@@ -163,7 +175,7 @@ void displayMatrix(const vector<vector<int>>& matrix, const vector<string>& citi
     }
     cout << endl;
     for (size_t i = 0; i < cities.size(); ++i) {
-        cout << cities[i] << " ";
+        cout << cities[i] << "       ";
         for (size_t j = 0; j < matrix[i].size(); ++j) {
             cout << setw(10) << matrix[i][j];
         }
@@ -207,14 +219,14 @@ int main() {
 
     while (true) {
         cout << "\nMenu:\n"
-             << "1. Add new cities\n"
-             << "2. Add road between cities\n"
-             << "3. Add road budget\n"
+             << "1. Add new city(ies)\n"
+             << "2. Add roads between cities\n"
+             << "3. Add the budget for roads\n"
              << "4. Edit city\n"
-             << "5. Search city by index\n"
+             << "5. Search for a city using its index\n"
              << "6. Display cities\n"
              << "7. Display roads\n"
-             << "8. Display all recorded data\n"
+             << "8. Display recorded data on console\n"
              << "9. Exit\n"
              << "Enter choice: ";
         cin >> choice;
@@ -233,7 +245,7 @@ int main() {
                 addRoadBudget(roads, budgets, roadList, cities);
                 break;
             case 4:
-                cout << "Enter city index to edit: ";
+                cout << "Enter the index of the city to edit: ";
                 cin >> index;
                 editCity(cities, index);
                 break;
